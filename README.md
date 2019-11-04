@@ -13,6 +13,7 @@ trap 'kill %1; kill %2' SIGINT; \
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 | sed -e 's/^/[Kiali ] /' & \
 kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 15032:16686 | sed -e 's/^/[Jaeger] /' & \
 wait
+trap - SIGINT
 ```
 
 ## Step 3 - Demo the app
