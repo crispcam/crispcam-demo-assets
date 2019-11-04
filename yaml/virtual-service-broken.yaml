@@ -1,0 +1,29 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: &appname reviews
+spec:
+  hosts:
+  - *appname
+  - reviews.crisps.gcp-north.co.uk
+  gateways:
+  - mesh
+  - gateway
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: *appname
+        subset: gold
+      weight: 0
+    - destination:
+        host: *appname
+        subset: red
+      weight: 0
+    - destination:
+        host: *appname
+        subset: broken
+      weight: 100

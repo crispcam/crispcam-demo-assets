@@ -1,0 +1,26 @@
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: DestinationRule
+metadata:
+  name: reviews
+spec:
+  host: reviews
+  trafficPolicy:
+    connectionPool:
+      http:
+        http1MaxPendingRequests: 200
+    outlierDetection:
+      consecutiveErrors: 2
+      interval: 1s
+      baseEjectionTime: 3m
+      maxEjectionPercent: 100
+  subsets:
+  - name: gold
+    labels:
+      version: gold
+  - name: red
+    labels:
+      version: red
+  - name: broken
+    labels:
+      version: broken
