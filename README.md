@@ -1,12 +1,21 @@
 # Crispcam Demo Outline
 
+There are two flows for this demo:
+
+1. Anthos Service Mesh
+2. Open Source
+
+You can show both and interleave them - but they have different flavours.
+
 ## Step 1 - Login to the cluster
 
 ```
 gcloud beta container clusters get-credentials demo-cluster-a --region europe-west1 --project crisp-retail-demo
 ```
 
-## Step 2 - Load Kiali and Jaeger Proxies
+## Step 2 - Load Kiali and Jaeger Proxies (Open Source Only)
+
+**Note: You only need to do this if demonstrating open source**
 
 ```bash
 trap 'kill %1; kill %2' SIGINT; \
@@ -23,6 +32,14 @@ Visit [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and show the vari
 Show [Crispcam](https://crisps.gcp-north.co.uk/crispcam) and talk a bit about Vision AutoML
 
 ## Step 4 - Demo Service Visibility
+
+### Google Cloud
+
+Visit the Anthos Service Mesh Services page in the cloud console to see the various graph, timeline and topology views.
+
+Show SLO and SLI metrics at this stage
+
+### Open Source
 
 Visit the [kiali dashboard](http://localhost:20001/kiali/) (admin/admin) and click Graph - ensure the default project is selected (it's not by default).
 
@@ -54,7 +71,7 @@ Show how Firefox only shows red stars now and Chrome only shows yellow
 
 ## Step 6 - Show circuit breaking
 
-### 6a - Backgrouns
+### 6a - Background
 
 Point out the 'broken' service - it holds a TCP connection for 10 seconds before returning - by default most software will just wait for it to return.
 
@@ -95,10 +112,6 @@ Go back to the [kiali dashboard](http://localhost:20001/kiali/) and show how the
 ## Step 7 - Show tracing
 
 Show Jaeger tracing - [Jaeger Dashboard](http://localhost:15032/)
-
-## Step 8 - Show CSM dashboard
-
-Show the demo CSM project and talk about SLO/SLA and healthchecking
 
 ## Step 9 - Cleanup
 
