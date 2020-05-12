@@ -1,22 +1,35 @@
 # Crispcam Demo Outline
 
+There are two flows for this demo:
+
+1. Anthos Service Mesh
+2. Open Source
+
+You can show both and interleave them - but they have different flavours.
+
 ## Step 1 - Login to the cluster
 
 ```
 gcloud beta container clusters get-credentials demo-cluster-a --region europe-west1 --project crisp-retail-demo
 ```
 
-## Step 2 - Demo the app
+## Step 2 - Load Kiali and Jaeger Proxies (Open Source Only)
+
+**Note: You only need to do this if demonstrating open source**
+
+```bash
+trap 'kill %1; kill %2' SIGINT; \
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=kiali -o jsonpath='{.items[0].metadata.name}') 20001:20001 | sed -e 's/^/[Kiali ] /' & \
+kubectl -n istio-system port-forward $(kubectl -n istio-system get pod -l app=jaeger -o jsonpath='{.items[0].metadata.name}') 15032:16686 | sed -e 's/^/[Jaeger] /' & \
+wait
+trap - SIGINT
+```
+
+## Step 3 - Demo the app
 
 Visit [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and show the various features (reviews, search, etc) and explain how it's all microservices.
 
 Show [Crispcam](https://crisps.gcp-north.co.uk/crispcam) and talk a bit about Vision AutoML
-
-## Step 3 - Demo Tracing
-
-Visit the Stackdriver tracing UI and show it off for all its glory!
-
-The app is actually sending traces directly via Spring Cloud GCP _and_ via ASM. Nifty eh?
 
 ## Step 4 - Demo Service Visibility
 
@@ -25,6 +38,14 @@ The app is actually sending traces directly via Spring Cloud GCP _and_ via ASM. 
 Visit the Anthos Service Mesh Services page in the cloud console to see the various graph, timeline and topology views.
 
 Show SLO and SLI metrics at this stage
+
+### Open Source
+
+Visit the [kiali dashboard](http://localhost:20001/kiali/) (admin/admin) and click Graph - ensure the default project is selected (it's not by default).
+
+Show how this is all handled without any major code changes (just some http headers). If the customer wants more detail the attached file [code/RestTemplateConfig.kt](code/RestTemplateConfig.kt) shows how a Spring Boot config bean could be used to achieve this and lists the http headers persisted.
+
+Show how load balancing (e.g. to the review app) is handled and if you add the traffic percentage label show how it is roughly 50/50.
 
 ## Step 5 - Show client-side load balancing
 
@@ -84,7 +105,15 @@ kubectl apply -f yaml/virtual-service-fixed.yaml
 
 Now go back to [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and observe the reviews are showing down, but the site is working properly.
 
-## Step 7 - Cleanup
+### 6d - Show in Kiali
+
+Go back to the [kiali dashboard](http://localhost:20001/kiali/) and show how the service is now going from 'healthy' to 'unhealthy' - and we didn't change any code!
+
+## Step 7 - Show tracing
+
+Show Jaeger tracing - [Jaeger Dashboard](http://localhost:15032/)
+
+## Step 9 - Cleanup
 
 Apply the cleanup file so it works for everyone again:
 
