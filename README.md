@@ -3,14 +3,14 @@
 ## Step 1 - Login to the cluster
 
 ```
-gcloud beta container clusters get-credentials demo-cluster-a --region europe-west1 --project crisp-retail-demo
+gcloud container clusters get-credentials crisps-autopilot --region europe-west1 --project crispcam
 ```
 
 ## Step 2 - Demo the app
 
-Visit [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and show the various features (reviews, search, etc) and explain how it's all microservices.
+Visit [crispcam.com](https://crispcam.com) and show the various features (reviews, search, etc) and explain how it's all microservices.
 
-Show [Crispcam](https://crisps.gcp-north.co.uk/crispcam) and talk a bit about Vision AutoML
+Show [Crispcam](https://crispcam.com/crispcam) and talk a bit about Vision AutoML
 
 ## Step 3 - Demo Tracing
 
@@ -68,7 +68,7 @@ Show the file [yaml/virtual-service-broken.yaml](yaml/virtual-service-broken.yam
 kubectl apply -f yaml/virtual-service-broken.yaml
 ```
 
-Go back to [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and show it's broken!
+Go back to [crispcam.com](https://crispcam.com) and show it's broken!
 
 ### 6c - Fix it
 
@@ -82,7 +82,7 @@ Apply this change:
 kubectl apply -f yaml/virtual-service-fixed.yaml
 ```
 
-Now go back to [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and observe the reviews are showing down, but the site is working properly.
+Now go back to [crispcam.com](https://crispcam.com) and observe the reviews are showing down, but the site is working properly.
 
 ## Step 7 - Cleanup
 

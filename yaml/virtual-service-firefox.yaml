@@ -1,25 +1,27 @@
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: &appname reviews
+  name: reviews
 spec:
   hosts:
-  - *appname
+    - reviews.default.svc.cluster.local
+    - reviews.crispcam.com
   gateways:
-  - mesh
+    - mesh
+    - asm-gateway/gateway
   http:
-  - match:
-    - headers:
-        user-agent:
-          regex: '.*?(Firefox)/\d\d\.\d$'
-    route:
-    - destination:
-        host: *appname
-        subset: red
-      weight: 100
-  - route:
-    - destination:
-        host: *appname
-        subset: gold
-      weight: 100
+    - match:
+        - headers:
+            user-agent:
+              regex: '.*Firefox/\d\d\d?.\d\d?$'
+      route:
+        - destination:
+            host: reviews
+            subset: red
+          weight: 100
+    - route:
+        - destination:
+            host: reviews
+            subset: gold
+          weight: 100

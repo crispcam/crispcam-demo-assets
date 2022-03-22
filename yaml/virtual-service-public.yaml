@@ -1,30 +1,29 @@
 ---
-apiVersion: networking.istio.io/v1alpha3
+apiVersion: networking.istio.io/v1beta1
 kind: VirtualService
 metadata:
-  name: &appname reviews
+  name: reviews
 spec:
   hosts:
-  - reviews.crisps.gcp-north.co.uk
-  - *appname
+    - reviews.default.svc.cluster.local
+    - reviews.crispcam.com
   gateways:
-  - mesh
-  - gateway
+    - mesh
+    - asm-gateway/gateway
   http:
-  - match:
-    - uri:
-        prefix: /
-#    timeout: 1s
-    route:
-    - destination:
-        host: *appname
-        subset: gold
-      weight: 50
-    - destination:
-        host: *appname
-        subset: red
-      weight: 50
-    - destination:
-        host: *appname
-        subset: broken
-      weight: 0
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: reviews
+            subset: gold
+          weight: 50
+        - destination:
+            host: reviews
+            subset: red
+          weight: 50
+        - destination:
+            host: reviews
+            subset: broken
+          weight: 0

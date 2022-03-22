@@ -1,5 +1,7 @@
 # Crispcam Demo Outline
 
+**Note** - this is currently not working due to GKE Autopilot not supporting in-cluster Mesh...
+
 There are two flows for this demo:
 
 1. Anthos Service Mesh
@@ -27,9 +29,9 @@ trap - SIGINT
 
 ## Step 3 - Demo the app
 
-Visit [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and show the various features (reviews, search, etc) and explain how it's all microservices.
+Visit [crispcam.com](https://crispcam.com) and show the various features (reviews, search, etc) and explain how it's all microservices.
 
-Show [Crispcam](https://crisps.gcp-north.co.uk/crispcam) and talk a bit about Vision AutoML
+Show [Crispcam](https://crispcam.com/crispcam) and talk a bit about Vision AutoML
 
 ## Step 4 - Demo Service Visibility
 
@@ -89,7 +91,7 @@ Show the file [yaml/virtual-service-broken.yaml](yaml/virtual-service-broken.yam
 kubectl apply -f yaml/virtual-service-broken.yaml
 ```
 
-Go back to [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and show it's broken!
+Go back to [crispcam.com](https://crispcam.com) and show it's broken!
 
 ### 6c - Fix it
 
@@ -103,7 +105,7 @@ Apply this change:
 kubectl apply -f yaml/virtual-service-fixed.yaml
 ```
 
-Now go back to [crisps.gcp-north.co.uk](https://crisps.gcp-north.co.uk) and observe the reviews are showing down, but the site is working properly.
+Now go back to [crispcam.com](https://crispcam.com) and observe the reviews are showing down, but the site is working properly.
 
 ### 6d - Show in Kiali
 
